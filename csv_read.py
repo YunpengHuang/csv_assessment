@@ -7,33 +7,21 @@ import operator
 input_csv = csv.DictReader(open("csv_text.csv"))
 
 # sort based on division and points (top 3 in the entries)
-result = sorted(input_csv, key=lambda x: (x["division"], x["points"]))[:3]
+data = sorted(input_csv, key=lambda x: (x["division"], x["points"]))[:3]
 
 
+def convert_to_yaml_format(dictionary):
+    temp_dict_list = []
+    data_test = {}
+    for items in dictionary:
+        temp_dict = {"detail": "In division " + items["division"] + " from " + items["date"] + " performing " + items[
+            "summary"], "name": items["firstname"] + " " + items["lastname"]}
+        temp_dict_list.append(temp_dict)
 
-# format that it needs to be in for it output in yaml
-data = {
-    'records': [
-        {'detail': "In division 1 from 2018-01-02 performing Offensive Duties", 'name': "zelma Ivatt"},
-        {'detail': "In division 1 from 2018-01-02 performing Offensive Duties", 'name': "zelma Ivatt"},
-        {'detail': "In division 1 from 2018-01-02 performing Offensive Duties", 'name': "zelma Ivatt"},
-    ],
-}
+    data_test['record'] = temp_dict_list
+    return data_test
 
+
+top_three_records = convert_to_yaml_format(data)
 with open("test.yaml", "w") as output_file:
-    yaml.dump(data, output_file, default_flow_style=False)
-
-    # with open("csv_result.yaml", "w") as output_file:
-    #     for rows in range(3):
-    #         yaml.dump(result[rows], output_file, default_flow_style=True)
-
-    # firstname: string
-    # lastname: string
-    # date: String
-    # division: Integer
-    # points: Integer
-    # summary: String
-
-    # sort by division then by points
-    # use dictionary python format
-    # what needs to be validated only the sorting order
+    yaml.dump(top_three_records, output_file, default_flow_style=False)
