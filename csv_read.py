@@ -15,8 +15,8 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 # input from commandline
-input_csv_filename = "csv_text.csv"  # input("input filename or the directory to the filename : ")
-output_yaml_filename = "csv_result.yaml"  # input("output filename or the directory of the output : ")
+input_csv_filename = input("input filename or the directory to the filename : ")
+output_yaml_filename = input("output filename or the directory of the output : ")
 try:
     if os.path.getsize(input_csv_filename) > 0 and input_csv_filename.lower().endswith(
             ".csv") and output_yaml_filename.lower().endswith(".yaml"):
@@ -33,8 +33,6 @@ try:
 
         # sort based on division (acs) and points (desc) (top 3 in the entries)
         data = sorted(new_input_csv, key=lambda x: (x["division"], -x["points"]))[:3]
-
-        print(data)
 
 
         def convert_to_yaml_format(dictionary):
